@@ -247,6 +247,33 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertTrue(bst.contains('L'))
 
 
+    def test_delete_edge_case(self):
+        bst = BinarySearchTree()
+
+        bst.insert(6)
+        bst.insert(5)
+        bst.insert(4)
+        bst.insert(7)
+        bst.insert(3)
+        bst.insert(2)
+        bst.insert(1)
+        bst.insert(8)
+        bst.insert(9)
+
+        self.assertEqual(len(bst), 9)
+
+        bst.delete(6)
+        self.assertEqual(len(bst), 8)
+        self.assertFalse(bst.contains(6))
+        self.assertTrue(bst.contains(1))
+        self.assertTrue(bst.contains(2))
+        self.assertTrue(bst.contains(3))
+        self.assertTrue(bst.contains(4))
+        self.assertTrue(bst.contains(5))
+        self.assertTrue(bst.contains(7))
+        self.assertTrue(bst.contains(8))
+        self.assertTrue(bst.contains(9))
+
 
     def test_iterate(self):
         bst = BinarySearchTree()
