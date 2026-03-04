@@ -11,6 +11,9 @@ class TestArray(unittest.TestCase):
         arr = Array(3, 'f')
         self.assertEqual(len(arr), 3)
         self.assertEqual(arr[0], 0.0)
+        arr = Array(5, 'u')
+        self.assertEqual(len(arr), 5)
+        self.assertEqual(arr[0], '\x00')
 
     def test_init_invalid_size(self):
         """Test initializing Array with invalid size"""
@@ -37,6 +40,11 @@ class TestArray(unittest.TestCase):
         self.assertEqual(arr[1], 0.0)
         self.assertEqual(arr[2], 0.0)
 
+        arr = Array(3, 'u')
+        self.assertEqual(arr[0], '\x00')
+        self.assertEqual(arr[1], '\x00')
+        self.assertEqual(arr[2], '\x00')
+
 
     def test_get_item_invalid(self):
         """Test getting an item with an invalid index"""
@@ -60,6 +68,16 @@ class TestArray(unittest.TestCase):
         self.assertEqual(arr[2], 33)
         self.assertEqual(arr[3], 42)
         self.assertEqual(arr[4], -1000)
+
+    def test_set_item_valid_unicode(self):
+        """Test setting an item with a valid value for unicode typecode"""
+        arr = Array(3, 'u')
+        arr[0] = 'a'
+        arr[1] = 'b'
+        arr[2] = 'c'
+        self.assertEqual(arr[0], 'a')
+        self.assertEqual(arr[1], 'b')
+        self.assertEqual(arr[2], 'c')
 
     def test_set_item_invalid_value(self):
         """Test setting an element with an invalid value"""
@@ -86,6 +104,9 @@ class TestArray(unittest.TestCase):
         arr = Array(31, 'd')
         self.assertEqual(len(arr), 31)
 
+        arr = Array(4, 'u')
+        self.assertEqual(len(arr), 4)
+
     # __repr__
     def test_repr(self):
         """Test getting the string representation of the array"""
@@ -94,3 +115,8 @@ class TestArray(unittest.TestCase):
         arr[1] = 2
         arr[3] = -2
         self.assertEqual(repr(arr), "array('l', [1, 2, 0, -2, 0])")
+
+        arr = Array(2, 'u')
+        arr[0] = 'h'
+        arr[1] = 'i'
+        self.assertEqual(repr(arr), "array('u', 'hi')")
