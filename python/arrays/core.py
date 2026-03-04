@@ -14,6 +14,7 @@ class Array:
            'b'         signed integer     1
            'B'         unsigned integer   1
            'u'         Unicode character  2
+           'w'         Unicode character  4
            'h'         signed integer     2
            'H'         unsigned integer   2
            'i'         signed integer     2
@@ -35,8 +36,11 @@ class Array:
         if size <= 0:
             raise ValueError(f'Invalid array size (must be positive): {size}')
         self._size = size
-        default_value = '\x00' if typecode == 'u' or typecode == 'w' else 0
-        self._array = array.array(typecode, [default_value] * size)
+        # Determine the null character for Unicode types, otherwise 0 for numbers
+        fill = '\x00' if typecode in 'uw' else 0
+
+        # Initialize one element and multiply the array.array itself for memory efficiency
+        self._array = array.array(typecode, [fill] * size)
 
 
     def __len__(self):
