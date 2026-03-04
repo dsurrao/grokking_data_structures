@@ -73,9 +73,17 @@ class TestArray(unittest.TestCase):
         """Test setting an item with a valid value for unicode typecode"""
         arr = Array(3, 'u')
         arr[0] = 'a'
-        arr[1] = 'b'
+        arr[1] = 'Ɓ'
         arr[2] = 'c'
         self.assertEqual(arr[0], 'a')
+        self.assertEqual(arr[1], 'Ɓ')
+        self.assertEqual(arr[2], 'c')
+
+        arr = Array(3, 'w')
+        arr[0] = 'Ã'
+        arr[1] = 'b'
+        arr[2] = 'c'
+        self.assertEqual(arr[0], 'Ã')
         self.assertEqual(arr[1], 'b')
         self.assertEqual(arr[2], 'c')
 
@@ -107,6 +115,9 @@ class TestArray(unittest.TestCase):
         arr = Array(4, 'u')
         self.assertEqual(len(arr), 4)
 
+        arr = Array(22, 'w')
+        self.assertEqual(len(arr), 22)
+        
     # __repr__
     def test_repr(self):
         """Test getting the string representation of the array"""
