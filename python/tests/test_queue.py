@@ -161,6 +161,16 @@ class TestQueue(TestQueueTemplate, unittest.TestCase):
 
         self.assertEqual(str(queue), '[\'c\', \'d\', \'e\', \'f\']')
 
+    def test_str_with_full_queue(self):
+        queue = self.new_queue(5)
+        queue.enqueue('a')
+        queue.enqueue('b')
+        queue.enqueue('c')
+        queue.enqueue('d')
+        queue.enqueue('e')
+
+        self.assertEqual(str(queue), '[\'a\', \'b\', \'c\', \'d\', \'e\']')
+
 
 class TestQueueLinkedList(TestQueueTemplate, unittest.TestCase):
     """Runs the tests for a queue implemented with linked lists."""
